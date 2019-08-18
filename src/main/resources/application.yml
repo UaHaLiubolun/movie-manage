@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      host: 132.232.103.174
+      database: douban
+debug: false
