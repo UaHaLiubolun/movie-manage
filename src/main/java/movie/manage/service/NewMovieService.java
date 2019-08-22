@@ -39,7 +39,7 @@ public class NewMovieService {
     public Flux<MovieBean> query(DouBanRequest douBanRequest) {
         Query query = generateQuery(douBanRequest);
         if (query == null) {
-            return mongoTemplate.findAll(MovieBean.class);
+            return mongoTemplate.find(Query.query(new Criteria()).limit(10), MovieBean.class);
         }
         return mongoTemplate.find(generateQuery(douBanRequest), MovieBean.class);
     }
@@ -66,7 +66,7 @@ public class NewMovieService {
         if (criteriaList.isEmpty()) {
             return null;
         }
-        return Query.query(new Criteria().andOperator(criteriaList.toArray(new Criteria[0])));
+        return Query.query(new Criteria().andOperator(criteriaList.toArray(new Criteria[0]))).limit(10);
     }
 
 }
