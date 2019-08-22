@@ -7,14 +7,11 @@
 package movie.manage.controller;
 
 import movie.manage.Result;
-import movie.manage.bean.douban.DouBanRequest;
+import cn.stark.spider.common.bean.DouBanRequest;
 import movie.manage.bean.douban.MovieBean;
 import movie.manage.service.NewMovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -26,6 +23,7 @@ import reactor.core.publisher.Mono;
  * @version 3.0.0
  */
 @RestController
+@CrossOrigin
 @RequestMapping(value = "movie")
 public class NewMovieController {
 

@@ -1,4 +1,4 @@
-package movie.manage.spider;
+package cn.stark.spider.common;
 
 import java.io.Serializable;
 import java.util.HashMap;

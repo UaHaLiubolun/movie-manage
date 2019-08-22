@@ -4,10 +4,10 @@
  * @className cn.stark.spider.common.bean.DouBanRequest
  * @copyright Copyright 2019 Thuisoft, Inc. All rights reserved.
  */
-package movie.manage.bean.douban;
+package cn.stark.spider.common.bean;
 
 import lombok.Data;
-import movie.manage.spider.Request;
+import cn.stark.spider.common.Request;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;

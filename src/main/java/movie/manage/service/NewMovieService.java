@@ -6,7 +6,7 @@
  */
 package movie.manage.service;
 
-import movie.manage.bean.douban.DouBanRequest;
+import cn.stark.spider.common.bean.DouBanRequest;
 import movie.manage.bean.douban.MovieBean;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
