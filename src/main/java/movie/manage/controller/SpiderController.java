@@ -31,13 +31,14 @@ import java.util.List;
 @CrossOrigin
 public class SpiderController {
 
+    private RedissonClient redissonClient = Redisson.create(RedisConfig.getConfig());
+
+    private Scheduler<Request> requestScheduler = new RedisScheduler<>("request", redissonClient);
+
     @PostMapping("add")
     public Mono<Result> add(@RequestBody DouBanRequest douBanRequest) {
-        RedissonClient redissonClient = Redisson.create(RedisConfig.getConfig());
-        Scheduler<Request> requestScheduler = new RedisScheduler<>("request", redissonClient);
         List<Request> requests = douBanRequest.generateRequest();
         requests.forEach(requestScheduler::push);
-        redissonClient.shutdown();
         return Mono.just(Result.success("成功了的"));
     }
 }
