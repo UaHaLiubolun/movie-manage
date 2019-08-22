@@ -35,7 +35,7 @@ public class SpiderController {
     public Mono<Result> add(@RequestBody DouBanRequest douBanRequest) {
         RedissonClient redissonClient = Redisson.create(RedisConfig.getConfig());
         Scheduler<Request> requestScheduler = new RedisScheduler<>("request", redissonClient);
-        List<Request> requests = douBanRequest.generateRequest(10);
+        List<Request> requests = douBanRequest.generateRequest();
         requests.forEach(requestScheduler::push);
         redissonClient.shutdown();
         return Mono.just(Result.success("成功了的"));

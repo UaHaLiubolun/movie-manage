@@ -47,7 +47,9 @@ public class DouBanRequest implements Serializable {
 
     private String year_range;
 
-    public List<Request> generateRequest(int num) {
+    private int num = 10;
+
+    public List<Request> generateRequest() {
         List<Request> requests = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {
             Request request = new Request(generateUrl(i * 20));
