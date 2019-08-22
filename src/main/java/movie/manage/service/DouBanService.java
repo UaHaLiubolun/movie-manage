@@ -50,7 +50,6 @@ public class DouBanService {
     @Autowired
     private ReactiveMongoTemplate mongoTemplate;
 
-
     public Mono<Subject> get(String id, boolean isUpdate) {
         Subject subject;
         if (isUpdate) {
@@ -66,21 +65,20 @@ public class DouBanService {
 
     public void saveFileInfo(List<FileInfo> fileInfos) {
         fileInfos.forEach(fileInfo -> {
-            MovieBean movieBean = movieRepository.findByTitleOrderByDate(fileInfo.getName()).switchIfEmpty(mongoTemplate.find(Query.query(where("title").regex(fileInfo.getName())), MovieBean.class).publishNext()).publishNext().block();
+            MovieBean movieBean = movieRepository.findByTitleOrderByDate(fileInfo.getName())
+                    .switchIfEmpty(mongoTemplate.find(Query.query(where("title").regex(fileInfo.getName())), MovieBean.class).publishNext())
+                    .publishNext().block();
             if (movieBean != null) {
                 fileInfo.setMovieBean(movieBean);
             }
-            fileInfoRepository.save(fileInfo)
-                    .onErrorResume(
-                            e -> fileInfoRepository.findByMd5(fileInfo.getMd5())
-                                    .flatMap(originFileInfo -> {
-                                        if (originFileInfo.getMovieBean() == null) {
-                                            fileInfo.setId(originFileInfo.getId());
-                                            return fileInfoRepository.save(fileInfo);
-                                        } else {
-                                            return Mono.just(fileInfo);
-                                        }
-                                    })).subscribe();
+            fileInfoRepository.save(fileInfo).onErrorResume(e -> fileInfoRepository.findByMd5(fileInfo.getMd5()).flatMap(originFileInfo -> {
+                if (originFileInfo.getMovieBean() == null) {
+                    fileInfo.setId(originFileInfo.getId());
+                    return fileInfoRepository.save(fileInfo);
+                } else {
+                    return Mono.just(fileInfo);
+                }
+            })).subscribe();
         });
     }
 

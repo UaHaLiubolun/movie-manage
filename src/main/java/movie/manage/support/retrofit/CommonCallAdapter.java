@@ -13,7 +13,7 @@ public class CommonCallAdapter implements CallAdapter {
 
     @Override
     public Type responseType() {
-       return Subject.class;
+        return Subject.class;
     }
 
     @Override

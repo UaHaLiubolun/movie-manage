@@ -37,21 +37,17 @@ public class MovieController {
 
     @GetMapping(value = "/search")
     public Mono<Result> search(@RequestParam(value = "q") String q) {
-        return mongoTemplate
-                .find(Query.query(where("name").regex(q)), FileInfo.class)
-                .filter(fileInfo -> fileInfo.getMovieBean() != null)
+        return mongoTemplate.find(Query.query(where("name").regex(q)), FileInfo.class).filter(fileInfo -> fileInfo.getMovieBean() != null)
                 .collect(Collectors.toList()).map(Result::success);
     }
 
     @PostMapping
     public Mono<Result> save(@RequestBody FileInfo fileInfo) {
         return fileInfoRepository.save(fileInfo)
-                .onErrorResume(
-                        e -> fileInfoRepository.findByMd5(fileInfo.getMd5())
-                                .flatMap(originFileInfo -> {
-                                    fileInfo.setId(originFileInfo.getId());
-                                    return fileInfoRepository.save(fileInfo);
-                                })).map(Result::success);
+                .onErrorResume(e -> fileInfoRepository.findByMd5(fileInfo.getMd5()).flatMap(originFileInfo -> {
+                    fileInfo.setId(originFileInfo.getId());
+                    return fileInfoRepository.save(fileInfo);
+                })).map(Result::success);
     }
 
     @GetMapping(value = "/root")
@@ -61,6 +57,5 @@ public class MovieController {
             return fileInfo;
         }).collect(Collectors.toList()).map(Result::success);
     }
-
 
 }

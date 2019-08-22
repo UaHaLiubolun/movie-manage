@@ -21,7 +21,6 @@ public class RetrofitBeanDefinitionRegistryPostProcessor implements BeanDefiniti
 
     private Map<String, Retrofit> retrofitMap = new HashMap<>(1);
 
-
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 
@@ -52,8 +51,7 @@ public class RetrofitBeanDefinitionRegistryPostProcessor implements BeanDefiniti
         String baseApi = retrofitService.baseUrl();
         return retrofitMap.computeIfAbsent(baseApi,
                 r -> new Retrofit.Builder().baseUrl(baseApi).addCallAdapterFactory(new CommonCallAdapterFactory())
-                        .addConverterFactory(GsonConverterFactory.create()).build()
-        );
+                        .addConverterFactory(GsonConverterFactory.create()).build());
     }
 
 }
