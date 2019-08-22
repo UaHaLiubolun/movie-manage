@@ -1,14 +1,12 @@
 package movie.manage.bean.douban;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -36,4 +34,12 @@ public class MovieBean {
     private String title;
 
     private String url;
+
+    private List<String> tags = new LinkedList<>();
+
+    private List<String> genres = new LinkedList<>();
+
+    private List<String> countries = new LinkedList<>();
+
+    private String year_range;
 }
