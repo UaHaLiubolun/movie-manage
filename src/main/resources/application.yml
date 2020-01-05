@@ -3,4 +3,6 @@ spring:
     mongodb:
       host: 132.232.103.174
       database: douban
+      username: liubolun
+      password: liubolun
 debug: false
